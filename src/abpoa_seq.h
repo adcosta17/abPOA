@@ -4,7 +4,7 @@
 #include "abpoa.h"
 #include "kseq.h"
 
-KSEQ_INIT(gzFile, gzread)
+A_KSEQ_INIT(gzFile, gzread)
 
 #ifdef __cplusplus
 extern "C" {

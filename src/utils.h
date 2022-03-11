@@ -110,9 +110,9 @@ extern "C" {
     void *err_realloc(const char* func, void *p, size_t s);
 
     void usr_sys_cputime(double *usr_t, double *sys_t);
-	double cputime();
-	double realtime();
-    long peakrss(void);
+	double a_cputime();
+	double a_realtime();
+    long a_peakrss(void);
     void print_format_time(FILE *out);
     int err_func_format_printf(const char *func, const char *format, ...);
 

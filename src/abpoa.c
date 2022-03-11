@@ -138,7 +138,7 @@ int abpoa_usage(void)
 }
 
 int abpoa_main(char *file_fn, int is_list, abpoa_para_t *abpt){
-    double realtime0 = realtime();
+    double realtime0 = a_realtime();
     // TODO abpoa_init for each input file ???
     abpoa_t *ab = abpoa_init();
     if (is_list) { // input file list
@@ -152,7 +152,7 @@ int abpoa_main(char *file_fn, int is_list, abpoa_para_t *abpt){
         abpoa_msa1(ab, abpt, file_fn, stdout, NULL, NULL, NULL, NULL, NULL, NULL);
 
     abpoa_free(ab);
-	err_func_printf(__func__, "Real time: %.3f sec; CPU: %.3f sec; Peak RSS: %.3f GB.", realtime() - realtime0, cputime(), peakrss() / 1024.0 / 1024.0 / 1024.0);
+	err_func_printf(__func__, "Real time: %.3f sec; CPU: %.3f sec; Peak RSS: %.3f GB.", a_realtime() - realtime0, a_cputime(), a_peakrss() / 1024.0 / 1024.0 / 1024.0);
     return 0;
 }
 

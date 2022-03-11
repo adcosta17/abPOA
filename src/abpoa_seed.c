@@ -81,7 +81,7 @@ static inline int tq_shift(tiny_queue_t *q)
  *               and strand indicates whether the minimizer comes from the top or the bottom strand.
  *               Callers may want to set "p->n = 0"; otherwise results are appended to p
  */
-void mm_sketch(void *km, const uint8_t *str, int len, int w, int k, uint32_t rid, int is_hpc, int both_strand, ab_u128_v *p)
+void a_mm_sketch(void *km, const uint8_t *str, int len, int w, int k, uint32_t rid, int is_hpc, int both_strand, ab_u128_v *p)
 {
     uint64_t shift1 = 2 * (k - 1), mask = (1ULL<<2*k) - 1, kmer[2] = {0,0};
     int i, j, l, buf_pos, min_pos, kmer_span = 0;
@@ -690,7 +690,7 @@ int abpoa_collect_mm(void *km, uint8_t **seqs, int *seq_lens, int n_seq, abpoa_p
     mm_c[0] = 0;
     for (i = 0; i < n_seq; ++i) { // collect minimizers
         if (abpt->m > 5) mm_aa_sketch(km, seqs[i], seq_lens[i], abpt->w, abpt->k, i, 0, mm);
-        else mm_sketch(km, seqs[i], seq_lens[i], abpt->w, abpt->k, i, 0, abpt->amb_strand, mm);
+        else a_mm_sketch(km, seqs[i], seq_lens[i], abpt->w, abpt->k, i, 0, abpt->amb_strand, mm);
         mm_c[i+1] = mm->n;
     }
     return mm->n;

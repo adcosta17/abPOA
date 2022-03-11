@@ -141,7 +141,7 @@ typedef const char *ksstr_t;
 			s = s > n_bits? s - n_bits : 0; \
 			for (k = b; k != be; ++k) \
 				if (k->e - k->b > RS_MIN_SIZE) a_rs_sort_##name(k->b, k->e, n_bits, s); \
-				else if (k->e - k->b > 1) a_qrs_insertsort_##name(k->b, k->e); \
+				else if (k->e - k->b > 1) a_rs_insertsort_##name(k->b, k->e); \
 		} \
 	} \
 	void a_radix_sort_##name(rstype_t *beg, rstype_t *end) \

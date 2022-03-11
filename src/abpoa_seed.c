@@ -240,7 +240,7 @@ int abpoa_build_guide_tree(int n_seq, ab_u128_v *mm, int *tree_id_map) {
                                                                               // 
                                                                               // # total mimizers of i: mm_hit_n[(i*(i+1))/2+i]
                                                                               // # total hits for i and j (i>j): mm_hit_n[(i*(i+1)/2)+j]
-    radix_sort_ab_128x(mm->a, mm->a + mm->n); // sort mm by k-mer hash values
+    a_radix_sort_ab_128x(mm->a, mm->a + mm->n); // sort mm by k-mer hash values
     uint64_t last_x = mm->a[0].x;
     int *mm_cnt = (int*)_err_malloc(n_seq * sizeof(int));
     for (_i = 0, i = 1; i < mm->n; ++i) { // collect mm hits
@@ -330,7 +330,7 @@ int collect_anchors1(void *km, ab_u64_v *anchors, ab_u128_v mm, int *mm_c, int t
     int i, j, _i, _j; uint64_t xi, xj, _xi, _xj, _yi, _yj, a;
     i = mm_c[tid], j = mm_c[qid];
     // t's mm is already sorted XXX
-    radix_sort_ab_128x(mm.a + j, mm.a + mm_c[qid+1]);
+    a_radix_sort_ab_128x(mm.a + j, mm.a + mm_c[qid+1]);
 
     while (i < mm_c[tid+1] && j < mm_c[qid+1]) {
         xi = mm.a[i].x, xj = mm.a[j].x;
@@ -357,7 +357,7 @@ int collect_anchors1(void *km, ab_u64_v *anchors, ab_u128_v mm, int *mm_c, int t
         else if (xi > xj) ++j;
     }
     // sort by tpos
-    radix_sort_64(anchors->a, anchors->a + anchors->n);
+    a_radix_sort_64(anchors->a, anchors->a + anchors->n);
     return anchors->n;
 }
 
@@ -539,7 +539,7 @@ int abpoa_dp_chaining(void *km, ab_u64_v *anchors, ab_u64_v *par_anchors, abpoa_
             local_chains[n_local_chains++].y = i;
         }
     }
-    radix_sort_ab_128x(local_chains, local_chains + n_local_chains);
+    a_radix_sort_ab_128x(local_chains, local_chains + n_local_chains);
 
     // collect local chains
     // x: strand | endpos | score
@@ -567,7 +567,7 @@ int abpoa_dp_chaining(void *km, ab_u64_v *anchors, ab_u64_v *par_anchors, abpoa_
         }*/
     }
 
-    radix_sort_ab_128x(local_chains+tot_chain_i+1, local_chains + n_local_chains);
+    a_radix_sort_ab_128x(local_chains+tot_chain_i+1, local_chains + n_local_chains);
     abpoa_dp_chaining_of_local_chains(km, local_chains+tot_chain_i+1, n_local_chains-1-tot_chain_i, anchors, score, pre_id, par_anchors, min_w, tlen, qlen);
 
     kfree(km, score); kfree(km, pre_id); kfree(km, end_pos); kfree(km, local_chains);
@@ -646,11 +646,11 @@ int LIS_chaining(void *km, ab_u64_v *anchors, ab_u64_v *par_anchors, int min_w) 
     }
 
     if (n_for > 0) {
-        radix_sort_64(for_rank, for_rank + n_for);
+        a_radix_sort_64(for_rank, for_rank + n_for);
         n_for = LIS(km, n_a, for_rank, n_for);
     }
     if (n_rev > 0) {
-        radix_sort_64(rev_rank, rev_rank + n_rev);
+        a_radix_sort_64(rev_rank, rev_rank + n_rev);
         n_rev = LIS(km, n_a, rev_rank, n_rev);
     }
 
@@ -718,7 +718,7 @@ int abpoa_build_guide_tree_partition(uint8_t **seqs, int *seq_lens, int n_seq, a
     // partition into small windows
     int qid, tid;
     tid = read_id_map[0];
-    radix_sort_ab_128x(mm1.a + mm_c[tid], mm1.a + mm_c[tid+1]);
+    a_radix_sort_ab_128x(mm1.a + mm_c[tid], mm1.a + mm_c[tid+1]);
 
     par_c[0] = 0;
     for (i = 1; i < n_seq; ++i) {

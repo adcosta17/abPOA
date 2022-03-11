@@ -1,4 +1,4 @@
-#CC          = gcc
+CC          = gcc
 EXTRA_FLAGS = -Wno-unused-function -Wno-misleading-indentation -DUSE_SIMDE -DSIMDE_ENABLE_NATIVE_ALIASES
 CFLAGS      = -Wall -O3 $(EXTRA_FLAGS)
 
@@ -24,7 +24,7 @@ endif
 ifneq ($(gdb),)
 	CFLAGS   = -Wall -g ${DFLAGS} $(EXTRA_FLAGS)
 else
-	CFLAGS   = -Wall -O3 ${DFLAGS} $(EXTRA_FLAGS)
+	CFLAGS   = -Wall -O3 ${DFLAGS} $(EXTRA_FLAGS) -fPIC
 endif
 
 # for gprof
@@ -74,6 +74,8 @@ else ifneq ($(avx2),)
 #	SIMD_FLAG=$(FLAG_AVX512BW)
 #	py_SIMD_FLAG = AVX512BW=1
 endif
+
+SIMD_FLAG=$(FLAG_AVX2)
 
 .c.o:
 		$(CC) -c $(CFLAGS) $< -I$(INC_DIR) -o $@

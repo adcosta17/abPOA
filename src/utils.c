@@ -344,14 +344,14 @@ void usr_sys_cputime(double *usr_t, double *sys_t)
 	*sys_t = r.ru_stime.tv_sec + 1e-6 * + r.ru_stime.tv_usec;
 }
 
-double cputime()
+double a_cputime()
 {
 	struct rusage r;
 	getrusage(RUSAGE_SELF, &r);
 	return r.ru_utime.tv_sec + r.ru_stime.tv_sec + 1e-6 * (r.ru_utime.tv_usec + r.ru_stime.tv_usec);
 }
 
-double realtime()
+double a_realtime()
 {
 	struct timeval tp;
 	struct timezone tzp;
@@ -359,7 +359,7 @@ double realtime()
 	return tp.tv_sec + tp.tv_usec * 1e-6;
 }
 
-long peakrss(void)
+long a_peakrss(void)
 {
 	struct rusage r;
 	getrusage(RUSAGE_SELF, &r);

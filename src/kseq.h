@@ -153,13 +153,13 @@ typedef struct __kstring_t {
 #define kseq_rewind(ks) ((ks)->f->last_char = (ks)->f->is_eof = (ks)->f->begin = (ks)->f->end = 0)
 
 #define __KSEQ_BASIC(SCOPE, type_t)										\
-	SCOPE kseq_t *kseq_init(type_t fd)									\
+	SCOPE kseq_t *a_kseq_init(type_t fd)									\
 	{																	\
 		kseq_t *s = (kseq_t*)calloc(1, sizeof(kseq_t));					\
 		s->f = ks_init(fd);												\
 		return s;														\
 	}																	\
-	SCOPE void kseq_destroy(kseq_t *ks)									\
+	SCOPE void a_kseq_destroy(kseq_t *ks)									\
 	{																	\
 		if (!ks) return;												\
 		free(ks->name.s); free(ks->comment.s); free(ks->seq.s);	free(ks->qual.s); \
@@ -173,7 +173,7 @@ typedef struct __kstring_t {
    -2   truncated quality string
  */
 #define __KSEQ_READ(SCOPE) \
-	SCOPE int kseq_read(kseq_t *seq) \
+	SCOPE int a_kseq_read(kseq_t *seq) \
 	{ \
 		int c; \
 		kstream_t *ks = seq->f; \
@@ -234,14 +234,14 @@ typedef struct __kstring_t {
 	__KSEQ_READ(SCOPE)                          \
 	__KSEQ_COPY(SCOPE)
 
-#define KSEQ_INIT(type_t, __read) KSEQ_INIT2(static, type_t, __read)
+#define A_KSEQ_INIT(type_t, __read) KSEQ_INIT2(static, type_t, __read)
 
 #define KSEQ_DECLARE(type_t) \
 	__KS_TYPE(type_t) \
 	__KSEQ_TYPE(type_t) \
-	extern kseq_t *kseq_init(type_t fd); \
-	void kseq_destroy(kseq_t *ks); \
-	int kseq_read(kseq_t *seq);     \
+	extern kseq_t *a_kseq_init(type_t fd); \
+	void a_kseq_destroy(kseq_t *ks); \
+	int a_kseq_read(kseq_t *seq);     \
     int kseq_copy(kseq_t *seq, kseq_t kseq);
 
 #endif

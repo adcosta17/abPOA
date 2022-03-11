@@ -159,7 +159,7 @@ abpoa_seq_t *abpoa_realloc_seq(abpoa_seq_t *abs) {
 
 int abpoa_read_nseq(abpoa_seq_t *abs, kseq_t *kseq, int chunk_read_n) {
     int n = 0;
-    while (n < chunk_read_n && kseq_read(kseq) >= 0) {
+    while (n < chunk_read_n && a_kseq_read(kseq) >= 0) {
         abpoa_realloc_seq(abs);
         // copy kseq to abs->seq
         abpoa_cpy_seq(abs, abs->n_seq, kseq);
@@ -170,7 +170,7 @@ int abpoa_read_nseq(abpoa_seq_t *abs, kseq_t *kseq, int chunk_read_n) {
 
 int abpoa_read_seq(abpoa_seq_t *abs, kseq_t *kseq) {
     int n = 0;
-    while (kseq_read(kseq) >= 0) {
+    while (a_kseq_read(kseq) >= 0) {
         abpoa_realloc_seq(abs);
         // copy kseq to abs->seq
         abpoa_cpy_seq(abs, abs->n_seq, kseq);

@@ -417,7 +417,7 @@ int abpoa_msa1(abpoa_t *ab, abpoa_para_t *abpt, char *read_fn, FILE *out_fp, uin
     abpoa_seq_t *abs = ab->abs; int exist_n_seq = abs->n_seq;
 
     // read seq from read_fn
-    gzFile readfp = xzopen(read_fn, "r"); kseq_t *ks = kseq_init(readfp);
+    gzFile readfp = xzopen(read_fn, "r"); kseq_t *ks = a_kseq_init(readfp);
     int i, j, n_seq = abpoa_read_seq(abs, ks);
 
     // always reset graph before perform POA
@@ -462,7 +462,7 @@ int abpoa_msa1(abpoa_t *ab, abpoa_para_t *abpt, char *read_fn, FILE *out_fp, uin
     // output
     abpoa_output(ab, abpt, out_fp, cons_seq, cons_cov, cons_l, cons_n, msa_seq, msa_l);
 
-    kseq_destroy(ks); gzclose(readfp);
+    a_kseq_destroy(ks); gzclose(readfp);
     for (i = 0; i < n_seq; ++i) free(seqs[i]); free(seqs); free(seq_lens);
     return 0;
 }
